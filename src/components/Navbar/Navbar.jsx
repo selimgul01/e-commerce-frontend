@@ -4,6 +4,18 @@ import { IoPersonOutline, IoHeartOutline } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import NavbarBottom from "./NavbarBottom";
 
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 const Navbar = () => {
   return (
     <>
