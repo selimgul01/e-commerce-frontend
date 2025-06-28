@@ -17,7 +17,7 @@ const ProductCard = () => {
           Erkek Bej Melanj Slim Fit Dar Kesim %100 Pamuk Bisiklet Yaka Kısa
           Kollu Tişört
         </p>
-        <p>279,99 TL</p>
+        <p>279,99 TL</p> 
       </div>
     </div>
   );
