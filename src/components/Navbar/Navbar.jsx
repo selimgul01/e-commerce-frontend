@@ -4,17 +4,14 @@ import { IoPersonOutline, IoHeartOutline } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import NavbarBottom from "./NavbarBottom";
 
-
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   return (
@@ -32,10 +29,17 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-5 ">
-          <IoPersonOutline
-            size={25}
-            className="cursor-pointer hover:scale-105 transition-all"
-          />
+          <DropdownMenu>
+            <DropdownMenuTrigger><IoPersonOutline size={25}/> </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <IoHeartOutline
             size={25}
             className="cursor-pointer hover:scale-105 transition-all"
@@ -46,7 +50,7 @@ const Navbar = () => {
           />
         </div>
       </div>
-      <NavbarBottom/>
+      <NavbarBottom />
     </>
   );
 };
