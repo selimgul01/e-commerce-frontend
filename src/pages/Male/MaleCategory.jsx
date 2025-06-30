@@ -63,11 +63,11 @@ const images = [
 
 const MaleCategory = () => {
   return (
-    <div className="">
+    <div className="pb-20 border-b">
         <h1 className="text-4xl font-semibold text-slate-900">Erkek</h1>
         <div className="grid xl:grid-cols-10 lg:grid-cols-7 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 mt-3 space-x-8  ">
           {images.map((image) => (
-          <div className="flex flex-col items-center space-y-2 cursor-pointer">
+          <div key={image.id} className="flex flex-col items-center space-y-2 cursor-pointer">
             <div className="bg-gray-200 w-[130px] h-[130px] rounded-full  ">
               <img src={image.image} alt="" />
             </div>
