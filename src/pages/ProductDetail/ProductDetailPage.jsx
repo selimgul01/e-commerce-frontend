@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
             <option value="XL">XL</option>
             <option value="2XL">2XL</option>
           </select>
-          <Counter />
+          <Counter id= {id} />
           <Button onClick={submitHandler} className="w-full">
             Sepete Ekle
           </Button>
