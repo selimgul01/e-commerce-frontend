@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 const API_BASE = "http://localhost:5000/api/cart";
 
@@ -27,7 +26,7 @@ export const addToCart = createAsyncThunk(
 
 export const getCart = createAsyncThunk("cart/getCart", async (_, thunkAPI) => {
   try {
-    const token = localStorage.getItem("token"); // token ile kullanıcıyı tanıyoruz
+    const token = localStorage.getItem("token"); 
     const res = await axios.get(`${API_BASE}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -39,12 +38,44 @@ export const getCart = createAsyncThunk("cart/getCart", async (_, thunkAPI) => {
   }
 });
 
+export const removeFromCart = createAsyncThunk("cart/removeFromCart",async({productId, size},thunkAPI)=>{
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.delete(`${API_BASE}/remove`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      },
+      data:{ productId, size }
+    })
+    console.log("res.data.",res.data)
+    return res.data.items
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.message);
+  }
+})
+
+
+export const clearCart = createAsyncThunk("cart/clearCart",async(_,thunkAPI)=>{
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.delete(`${API_BASE}/clear`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return res.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.message);
+  }
+})
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
     loading: false,
     error: null,
+    isSuccessful: false
   },
   reducers: {
     increaseQuantity: (state, action) => {
@@ -98,12 +129,23 @@ export const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.items; // backend’den gelen güncellenmiş sepet
+        state.isSuccessful = true
+        state.items = action.payload.items; 
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+        state.isSuccessful = false
+      })
+
+      .addCase(clearCart.fulfilled, (state) => {
+        state.items = []; 
+      })
+      .addCase(removeFromCart.fulfilled,(state,action) => {
+        
+        state.items = action.payload
+        state.isSuccessful = true
+      })
   },
 });
 export const { increaseQuantity, decreaseQuantity } = cartSlice.actions;

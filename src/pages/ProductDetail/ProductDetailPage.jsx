@@ -1,8 +1,10 @@
 import Counter from "@/components/Counter";
+import Reviews from "@/components/Reviews/Reviews";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/redux/cart/cartSlice";
 import { getProductById } from "@/redux/product/productSlice";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { IoStar } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -12,12 +14,11 @@ const ProductDetailPage = () => {
 
 
   const { id } = useParams();
-  const { count } = useSelector((state) => state.counter);
   const { singleProduct } = useSelector((state) => state.product);
+  const { isSuccessful } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   console.log("size", size);
-  console.log("count", count);
 
 
   useEffect(() => {
@@ -25,7 +26,9 @@ const ProductDetailPage = () => {
   }, [dispatch, id]);
 
   const submitHandler = () => {
-    dispatch(addToCart({ productId:id, quantity:count, size  }));
+    isSuccessful && toast.success("Ürün Sepete Eklendi")
+    dispatch(addToCart({ productId:id, quantity: 1, size  }));
+    
   };
 
   
@@ -63,8 +66,9 @@ const ProductDetailPage = () => {
             onChange={(e) => setSize(e.target.value)}
             name="size"
             id="size"
-            className="max-w-[100px] text-center outline-none border border-gray-300 p-1 rounded-lg"
+            className="max-w-[150px] text-center outline-none border border-gray-300 p-1 rounded-lg"
           >
+            <option value="" disabled={true} >Beden Seç</option>
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -72,17 +76,13 @@ const ProductDetailPage = () => {
             <option value="XL">XL</option>
             <option value="2XL">2XL</option>
           </select>
-          <Counter id= {id} />
           <Button onClick={submitHandler} className="w-full">
             Sepete Ekle
           </Button>
         </div>
       </div>
 
-      <div className="border border-gray-300 rounded-lg">
-        <h1 className="text-center">DEĞERLENDİRMELER</h1>
-        <div className=""></div>
-      </div>
+      <Reviews/>
     </div>
   );
 };

@@ -2,19 +2,33 @@ import React from "react";
 import { FiTruck } from "react-icons/fi";
 import Counter from "../Counter";
 import { MdDeleteOutline } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { decreaseQuantity, increaseQuantity } from "@/redux/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "@/redux/cart/cartSlice";
+import toast from "react-hot-toast";
 
 const CartItem = ({ item }) => {
+
+  const {isSuccessful} = useSelector(state => state.cart)
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
-    dispatch(increaseQuantity({ productId: item.product._id, size:item.size}));
+    dispatch(
+      increaseQuantity({ productId: item.product._id, size: item.size })
+    );
   };
   const decrementHandler = () => {
+    dispatch(
+      decreaseQuantity({ productId: item.product._id, size: item.size })
+    );
+  };
 
-    dispatch(decreaseQuantity({productId:item.product._id, size:item.size}))
-
+  const removeFromCartHandler = () => {
+    dispatch(removeFromCart({productId: item.product._id, size: item.size}));
+    isSuccessful && toast.success("Ürün Sepetten Çıkarıldı")
   };
 
   return (
@@ -27,9 +41,7 @@ const CartItem = ({ item }) => {
           width={100}
         />
         <div className=" flex flex-col space-y-2">
-          <h1 className=" text-slate-800 font-bold">
-            {item.product.title}
-          </h1>
+          <h1 className=" text-slate-800 font-bold">{item.product.title}</h1>
           <div className="text-sm font-semibold text-slate-700">
             {item.product.description}
           </div>
@@ -56,11 +68,13 @@ const CartItem = ({ item }) => {
 
       <div className="flex items-center space-x-8 ">
         <p className=" font-semibold text-blue-800 cursor-pointer w-[60px] text-center ">
-          {item.product.price * item.quantity } ₺
+          {item.product.price * item.quantity} ₺
         </p>
-        <div className="flex items-center cursor-pointer ">
-          <p className=" text-red-700 font-semibold">SİL</p>
-          <MdDeleteOutline className="text-red-700" size={20} />
+        <div onClick={removeFromCartHandler} className=" w-[50px] h-[30px] ">
+          <div className=" hover:border-b hover:border-b-red-600 flex items-center cursor-pointer transition-all ">
+            <p className="  text-red-700 pr-1">SİL</p>
+            <MdDeleteOutline className="text-red-700" size={20} />
+          </div>
         </div>
       </div>
     </div>

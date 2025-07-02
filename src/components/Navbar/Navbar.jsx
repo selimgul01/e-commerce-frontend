@@ -40,7 +40,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-5 ">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <IoPersonOutline size={25} />{" "}
+              <IoPersonOutline size={25} />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>

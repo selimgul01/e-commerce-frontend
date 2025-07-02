@@ -6,6 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useNavigate } from "react-router-dom";
 
 
 const categories = [
@@ -25,10 +26,13 @@ const categories = [
 
 const NavbarBottom = () => {
 
+  const navigate = useNavigate()
+
   return (
     <div className="container m-auto flex items-center justify-center space-x-5 mt-5">
       {categories?.map((category, i) => (
         <span
+          onClick={() => navigate(`/${category}`)}
           key={i}
           className={`${
             category === "Kampanyalar" ? "text-red-500" : "text-slate-600"
