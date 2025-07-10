@@ -17,9 +17,9 @@ const Hero = () => {
   return (
     <div className="container m-auto mt-10 ">
       <Carousel className="w-full">
-        <CarouselContent>
+        <CarouselContent >
           {images.map((image, i) => (
-            <CarouselItem>
+            <CarouselItem key={i}>
               <div className="w-full h-1/4 flex items-baseline justify-center ">
                 <img src={`/hero/${image}`} alt="" className="" />
                 

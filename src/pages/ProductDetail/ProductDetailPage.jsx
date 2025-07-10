@@ -18,7 +18,6 @@ const ProductDetailPage = () => {
   const { isSuccessful } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  console.log("size", size);
 
 
   useEffect(() => {
@@ -82,7 +81,7 @@ const ProductDetailPage = () => {
         </div>
       </div>
 
-      <Reviews/>
+      <Reviews id={id} />
     </div>
   );
 };

@@ -13,13 +13,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/auth/authSlice";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
 
   const {items} = useSelector(state => state.cart)
+  const {isLoading} = useSelector(state => state.auth)
+  const dispatch = useDispatch()
 
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(logout())
+    toast.success("Çıkış Başarılı")
+    !isLoading && navigate("/giris-yap")
+  }
 
   return (
     <>
@@ -38,17 +48,17 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-5 ">
-          <DropdownMenu>
+          <DropdownMenu  >
             <DropdownMenuTrigger>
               <IoPersonOutline size={25} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent >
+              <DropdownMenuLabel className="text-lg">Hesabım</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
+              <DropdownMenuItem  className="text-base cursor-pointer">Profil</DropdownMenuItem>
+              <DropdownMenuItem onClick = {()=>navigate("/siparislerim")} className="text-base cursor-pointer">Siparişlerim</DropdownMenuItem>
+              <DropdownMenuItem className="text-base cursor-pointer">Favorilerim</DropdownMenuItem>
+              <DropdownMenuItem onClick={logoutHandler} className="text-red-500 focus:text-red-800 transition-all cursor-pointer text-base">Çıkış Yap</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <IoHeartOutline

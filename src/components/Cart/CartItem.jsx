@@ -40,7 +40,7 @@ const CartItem = ({ item }) => {
           alt=""
           width={100}
         />
-        <div className=" flex flex-col space-y-2">
+        <div className=" flex flex-col space-y-2 w-[542px]">
           <h1 className=" text-slate-800 font-bold">{item.product.title}</h1>
           <div className="text-sm font-semibold text-slate-700">
             {item.product.description}
@@ -70,8 +70,8 @@ const CartItem = ({ item }) => {
         <p className=" font-semibold text-blue-800 cursor-pointer w-[60px] text-center ">
           {item.product.price * item.quantity} ₺
         </p>
-        <div onClick={removeFromCartHandler} className=" w-[50px] h-[30px] ">
-          <div className=" hover:border-b hover:border-b-red-600 flex items-center cursor-pointer transition-all ">
+        <div onClick={removeFromCartHandler} className=" w-[50px] h-[50px] content-center ">
+          <div className=" hover:border-b hover:border-b-red-600 flex items-center justify-center cursor-pointer transition-all ">
             <p className="  text-red-700 pr-1">SİL</p>
             <MdDeleteOutline className="text-red-700" size={20} />
           </div>

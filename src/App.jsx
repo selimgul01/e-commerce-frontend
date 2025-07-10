@@ -9,6 +9,7 @@ import CartPage from "./pages/Cart/CartPage";
 import AuthPage from "./pages/Auth/AuthPage";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "./AppLayout";
+import OrderPage from "./pages/Order/OrderPage";
 
 
  
@@ -26,6 +27,7 @@ function App() {
             <Route path="/favoriler" element={<FavoritePage />} />
             <Route path="/sepet" element={<CartPage />} />
             <Route path="/giris-yap" element={<AuthPage />} />
+            <Route path="/siparislerim" element={<OrderPage />} />
           </Routes>
         </AppLayout>
       </BrowserRouter>
