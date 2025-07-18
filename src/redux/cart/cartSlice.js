@@ -52,7 +52,7 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart",async({prod
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
-})
+}) 
 
 
 export const clearCart = createAsyncThunk("cart/clearCart",async(_,thunkAPI)=>{

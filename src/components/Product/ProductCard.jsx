@@ -11,7 +11,7 @@ const ProductCard = ({product}) => {
       <img
         className="w-full h-1/2 object-contain"
         src={product.image}
-        alt=""
+        alt="" 
       />
       <div className="flex flex-col space-y-2">
         <p className="text-xl text-slate-800 font-semibold">

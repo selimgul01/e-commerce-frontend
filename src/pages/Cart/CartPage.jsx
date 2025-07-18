@@ -1,20 +1,10 @@
 import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, getCart } from "@/redux/cart/cartSlice";
 import CartItem from "@/components/Cart/CartItem";
 import toast from "react-hot-toast";
+import OrderModal from "@/components/OrderModal/OrderModal";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 const CartPage = () => {
   const { items } = useSelector((state) => state.cart);
@@ -28,11 +18,7 @@ const CartPage = () => {
     return acc + item.quantity * item.product.price;
   }, 0);
 
-  const orderHandler = () => {
-    toast.success("Siparişiniz Alındı");
-    dispatch(clearCart())
-    dispatch()
-  };
+ 
   return (
     <>
       {items.length > 0 ? (
@@ -56,35 +42,7 @@ const CartPage = () => {
               </p>
             </div>
 
-            <Dialog>
-              <form action="">
-                <DialogTrigger asChild>
-                  <Button className="w-full"> Sepeti Onayla </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  
-                  <div className="grid gap-4">
-                    <div className="grid gap-3">
-                      <Label htmlFor="name-1">İsim Soyisim</Label>
-                      <Input />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="username-1">Şehir</Label>
-                      <Input />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="">Adres</Label>
-                      <Input />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="">Telefon</Label>
-                      <Input />
-                    </div>
-                  </div>
-                  <Button onClick ={orderHandler} className="w-full"> Siparişi Oluştur</Button>
-                </DialogContent>
-              </form>
-            </Dialog>
+            <OrderModal/>
           </div>
         </div>
       ) : (

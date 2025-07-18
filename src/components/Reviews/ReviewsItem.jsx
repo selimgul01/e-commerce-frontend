@@ -3,7 +3,7 @@ import { IoStar } from "react-icons/io5";
 
 const ReviewsItem = ({review}) => {
 
-
+ 
 
   return (
     <div className="flex items-center space-x-5 border-b pt-10 pb-5">
