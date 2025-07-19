@@ -15,7 +15,7 @@ const ReviewsItem = ({review}) => {
           {
             Array(review.rating).fill().map((_, i) => <IoStar key={i} className="text-blue-600" />)
             
-          }
+          } 
         </div>
         <div className="border rounded-xl bg-[#EEEEEE] w-[600px] p-5">
           <p>

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Rating = () => {
+const Rating = ({setRatingData}) => {
   const [rating, setRating] = useState(0); 
-  const [hover, setHover] = useState(0);   
+  const [hover, setHover] = useState(0);  
+  
+
+  useEffect(()=>{
+    setRatingData(rating)
+  },[rating,setRatingData])
 
   return (
     <div className="flex items-center"> 

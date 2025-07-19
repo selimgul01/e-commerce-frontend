@@ -74,7 +74,7 @@ const MaleCategory = () => {
             <p>{image.text}</p>
           </div>
         ))}
-        </div>
+        </div> 
         
       </div>
   )

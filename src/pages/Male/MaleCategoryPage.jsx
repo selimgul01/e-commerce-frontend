@@ -33,7 +33,7 @@ console.log("products:", products)
 
           ))
         }
-      </div>
+      </div>  
     </div>
   );
 };

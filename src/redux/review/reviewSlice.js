@@ -14,6 +14,7 @@ export const createReview = createAsyncThunk("review/createReview",async({produc
         Authorization: `Bearer ${token}`
       }
     })
+    console.log("response.data review:",response.data)
     return response.data
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
@@ -36,12 +37,18 @@ const initialState = {
   reviews: [],
   loading: false,
   error: null,
+  message: null
 };
 
 export const reviewSlice = createSlice({
   name: "review",
   initialState,
-  reducers: {},
+  reducers: {
+    resetReviewStatus: (state)=>{
+      state.message = null
+      state.error = null
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviews.pending, (state) => {
@@ -56,7 +63,25 @@ export const reviewSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+
+      builder
+      .addCase(createReview.pending, (state) => {
+        state.loading = true
+        state.message = null;
+      })
+      .addCase(createReview.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message
+        state.error = null;
+      })
+      .addCase(createReview.rejected, (state, action) => {
+        state.loading = false;
+        state.message = action.payload
+      });
   },
 });
+
+export const {resetReviewStatus} = reviewSlice.actions;
+
 
 export default reviewSlice.reducer;

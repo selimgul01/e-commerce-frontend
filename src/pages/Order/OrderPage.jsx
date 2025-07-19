@@ -24,7 +24,7 @@ const OrderPage = () => {
   return (
     <div className="container m-auto my-10  ">
       {orders?.map((order) => (
-        <div className="border p-5 rounded-xl bg-[#EEEEEE] mt-5">
+        <div key={order._id} className="border p-5 rounded-xl bg-[#EEEEEE] mt-5">
           <Accordion className="w-full" type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger  className="grid grid-cols-5">
@@ -59,7 +59,7 @@ const OrderPage = () => {
               <AccordionContent>
                 <div className="space-y-5 ">
                   {order.items.map((item) => (
-                    <div className=" grid grid-cols-2 space-x-5  mt-5 cursor-pointer">
+                    <div key={item._id} className=" grid grid-cols-2 space-x-5  mt-5 cursor-pointer">
                       <div
                         onClick={() => navigate(`/detay/${item.product._id}`)}
                         className="flex space-y-2 max-w-[600px]"
