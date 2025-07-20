@@ -4,7 +4,7 @@ import axios from "axios";
 const API_BASE = "http://localhost:5000/api/orders";
 
 export const createOrder = createAsyncThunk(
-  "order/createOrder",
+  "order/createOrder", 
   async (shippingAddress, thunkAPI) => {
     const token = localStorage.getItem("token")
 
@@ -53,7 +53,11 @@ const initialState = {
 export const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    clearStatus: (state) => {
+      state.success = false
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
@@ -84,6 +88,6 @@ export const orderSlice = createSlice({
   },
 });
 
-export const {} = orderSlice.actions;
+export const {clearStatus} = orderSlice.actions;
 
 export default orderSlice.reducer;

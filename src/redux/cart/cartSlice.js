@@ -68,16 +68,19 @@ export const clearCart = createAsyncThunk("cart/clearCart",async(_,thunkAPI)=>{
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 })
-
+ 
 export const cartSlice = createSlice({
   name: "cart",
-  initialState: {
+  initialState: { 
     items: [],
     loading: false,
     error: null,
-    isSuccessful: false
+    IsSuccessful: false
   },
   reducers: {
+    clearStatus: (state)=>{
+      state.IsSuccessful = false
+    },
     increaseQuantity: (state, action) => {
       const { productId, size } = action.payload;
 
@@ -126,16 +129,17 @@ export const cartSlice = createSlice({
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.IsSuccessful = false
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.isSuccessful = true
+        state.IsSuccessful = true
         state.items = action.payload.items; 
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.isSuccessful = false
+        state.IsSuccessful = false
       })
 
       .addCase(clearCart.fulfilled, (state) => {
@@ -144,10 +148,10 @@ export const cartSlice = createSlice({
       .addCase(removeFromCart.fulfilled,(state,action) => {
         
         state.items = action.payload
-        state.isSuccessful = true
+        state.IsSuccessful = true
       })
   },
 });
-export const { increaseQuantity, decreaseQuantity } = cartSlice.actions;
+export const { increaseQuantity, decreaseQuantity, clearStatus } = cartSlice.actions;
 
 export default cartSlice.reducer;

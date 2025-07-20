@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, getCart } from "@/redux/cart/cartSlice";
+import { getCart } from "@/redux/cart/cartSlice";
 import CartItem from "@/components/Cart/CartItem";
 import toast from "react-hot-toast";
 import OrderModal from "@/components/OrderModal/OrderModal";
@@ -15,11 +15,11 @@ const CartPage = () => {
   }, [dispatch]);
 
   const totalAmount = items.reduce((acc, item) => {
-    return acc + item.quantity * item.product.price;
+    return acc + item.quantity * (item.product.discountprice ? item.product.discountprice : item.product.price );
   }, 0);
 
  
-  return (
+  return ( 
     <>
       {items.length > 0 ? (
         <div className="container m-auto mt-10 flex space-x-14 justify-center ">

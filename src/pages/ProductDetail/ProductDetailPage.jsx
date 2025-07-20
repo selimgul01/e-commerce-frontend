@@ -1,7 +1,7 @@
 import Counter from "@/components/Counter";
 import Reviews from "@/components/Reviews/Reviews";
 import { Button } from "@/components/ui/button";
-import { addToCart } from "@/redux/cart/cartSlice";
+import { addToCart, clearStatus } from "@/redux/cart/cartSlice";
 import { getProductById } from "@/redux/product/productSlice";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ const ProductDetailPage = () => {
 
   const { id } = useParams();
   const { singleProduct } = useSelector((state) => state.product);
-  const { isSuccessful } = useSelector((state) => state.cart);
+  const { IsSuccessful } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   console.log("singleProduct", singleProduct);
@@ -23,8 +23,15 @@ const ProductDetailPage = () => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
+  useEffect(()=>{
+    if (IsSuccessful) {
+      toast.success("Ürün Sepete Eklendi");
+      dispatch(clearStatus())
+    }
+  },[IsSuccessful])
+
   const submitHandler = () => {
-    isSuccessful && toast.success("Ürün Sepete Eklendi");
+   
     dispatch(addToCart({ productId: id, quantity: 1, size }));
   };
 
@@ -41,7 +48,23 @@ const ProductDetailPage = () => {
             {singleProduct?.title}
           </p>
           <p className="text-xl font-semibold">{singleProduct?.description}</p>
-          <p className="text-xl font-semibold">{singleProduct?.price} TL</p>
+          <div className="flex items-end space-x-4">
+            <p
+              className={`${
+                singleProduct?.discountprice
+                  ? "text-slate-400 text-lg line-through "
+                  : " font-semibold"
+              }`}
+            >
+              {singleProduct?.price} TL
+            </p>
+            {singleProduct?.discountprice && (
+              <p className="text-red-700 font-semibold">
+                {" "}
+                {singleProduct?.discountprice} TL
+              </p>
+            )}
+          </div>
           <div className="flex items-center space-x-3 ">
             <div className="flex items-center space-x-1">
               {singleProduct?.averageRating &&
@@ -51,26 +74,26 @@ const ProductDetailPage = () => {
             </div>
 
             <p className="text-slate-600 text-sm  border-b-2 border-slate-600">
-              {singleProduct?.averageRating && singleProduct.averageRating}  değerlendirme
+              {singleProduct?.numReviews && singleProduct.numReviews}{" "}
+              değerlendirme
             </p>
           </div>
 
-          <label htmlFor="">Beden</label>
+          <label htmlFor="" className="text-slate-800 font-semibold">Beden Seçiniz</label>
           <select
             onChange={(e) => setSize(e.target.value)}
             name="size"
             id="size"
             className="max-w-[150px] text-center outline-none border border-gray-300 p-1 rounded-lg"
           >
-            <option value="" disabled={true}>
+            <option value="" disabled={true} >
               Beden Seç
             </option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="2XL">2XL</option>
+            {
+              singleProduct?.sizes?.map((size)=>(
+                <option value={size}>{size}</option>
+              ))
+            }
           </select>
           <Button onClick={submitHandler} className="w-full">
             Sepete Ekle

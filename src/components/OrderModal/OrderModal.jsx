@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createOrder, fetchOrder } from "@/redux/order/orderSlice";
+import { clearStatus, createOrder, fetchOrder } from "@/redux/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "@/redux/cart/cartSlice";
 import toast from "react-hot-toast";
@@ -25,9 +25,10 @@ const OrderModal = () => {
   const [shippingData,setShippingData] = useState({ fullName:"", city:"", street:"", phone:"" })
 
   useEffect(()=>{
-    if (success) {
+    if (success) { 
       dispatch(clearCart())
       toast.success("Siparişiniz Alındı")
+      dispatch(clearStatus())
     }
   },[success,error,dispatch])
 

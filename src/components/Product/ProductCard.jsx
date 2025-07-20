@@ -25,7 +25,18 @@ const ProductCard = ({ product }) => {
               <IoStar key={i} className="text-blue-600" />
             ))}
         </div>
-        <p>{product.price} TL</p>
+        <div className="flex items-end space-x-4">
+          <p
+            className={`${
+              product.discountprice
+                ? "text-slate-400 text-lg line-through "
+                : " font-semibold"
+            }`}
+          >
+            {product.price} TL
+          </p>
+          {product.discountprice && <p className="text-red-700 font-semibold"> {product.discountprice} TL</p>}
+        </div>
       </div>
     </div>
   );
