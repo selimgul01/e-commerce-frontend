@@ -26,7 +26,7 @@ const CommentModal = ({ item }) => {
   console.log("message", message)
 
   const commentChangeHandler = (e) => {
-    setComment(e.target.value)
+    setComment(e.target.value) 
   }
 
   const handleClick = () => {

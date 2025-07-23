@@ -25,7 +25,7 @@ console.log("products:", products)
 
   return (
     <div className="container m-auto w-full mt-10">
-      <MaleCategory />
+      <MaleCategory /> 
       <div className=" my-20 grid grid-cols-4 gap-5">
         {
           products?.map((product)=>(

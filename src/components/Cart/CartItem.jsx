@@ -19,7 +19,7 @@ const CartItem = ({ item }) => {
     dispatch(
       increaseQuantity({ productId: item.product._id, size: item.size })
     );
-  };
+  }; 
   const decrementHandler = () => {
     dispatch(
       decreaseQuantity({ productId: item.product._id, size: item.size })
@@ -36,17 +36,17 @@ const CartItem = ({ item }) => {
       <div className=" flex items-center space-x-5">
         <img
           className="object-contain"
-          src={item.product.image}
+          src={item?.product?.image}
           alt=""
           width={100}
         />
         <div className=" flex flex-col space-y-2 w-[542px]">
-          <h1 className=" text-slate-800 font-bold">{item.product.title}</h1>
+          <h1 className=" text-slate-800 font-bold">{item?.product?.title}</h1>
           <div className="text-sm font-semibold text-slate-700">
-            {item.product.description}
+            {item?.product?.description}
           </div>
           <div className="flex items-center ">
-            <p className="text-slate-800 font-semibold">{item.size}</p>
+            <p className="text-slate-800 font-semibold">{item?.size}</p>
             <p className="text-slate-600 pl-2">beden</p>
           </div>
           <div className="flex items-center space-x-2">
@@ -68,7 +68,7 @@ const CartItem = ({ item }) => {
 
       <div className="flex items-center space-x-8 ">
         <p className=" font-semibold text-blue-800 cursor-pointer w-[60px] text-center ">
-          {item.product.price * item.quantity} ₺
+          {(item?.product?.discountprice ? item?.product?.discountprice : item?.product?.price) * item?.quantity} ₺
         </p>
         <div onClick={removeFromCartHandler} className=" w-[50px] h-[50px] content-center ">
           <div className=" hover:border-b hover:border-b-red-600 flex items-center justify-center cursor-pointer transition-all ">

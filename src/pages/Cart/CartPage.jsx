@@ -15,8 +15,10 @@ const CartPage = () => {
   }, [dispatch]);
 
   const totalAmount = items.reduce((acc, item) => {
-    return acc + item.quantity * (item.product.discountprice ? item.product.discountprice : item.product.price );
+    return acc + item.quantity * (item?.product?.discountprice ? item?.product?.discountprice : item?.product?.price );
   }, 0);
+
+  console.log("items",items)
 
  
   return ( 

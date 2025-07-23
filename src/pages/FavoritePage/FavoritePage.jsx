@@ -1,22 +1,35 @@
 import ProductCard from "@/components/Product/ProductCard";
-import React from "react";
+import { getFavorites } from "@/redux/favorite/favoriteSlice";
+import React, { useEffect } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 
 const FavoritePage = () => {
+
+  const {favorites} = useSelector(state => state.favorite)
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(getFavorites())
+  },[dispatch])
+  
+  console.log("favorites",favorites)
+
   return (
     <div className="container m-auto mt-10">
       <div className="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 space-x-3">
-        <div className="relative">
-          <ProductCard />
-          <IoCloseCircleOutline className="absolute top-0 right-10 text-3xl hover:text-blue-700 cursor-pointer transition-all" />
-        </div>
-        <div className="relative">
-          <ProductCard />
-          <IoCloseCircleOutline className="absolute top-0 right-10 text-3xl hover:text-blue-700 cursor-pointer transition-all" />
-        </div>
+        {
+          favorites?.items?.map((product)=>(
+            
+              <ProductCard product={product.product} />
+              
+            
+          ))
+        }
+        
 
       </div>
-    </div>
+    </div> 
   );
 };
 

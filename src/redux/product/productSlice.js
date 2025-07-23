@@ -25,12 +25,14 @@ export const productSlice = createSlice({
     name: "product",
     initialState:{
         products:[],
+        favoriteProducts:[],
         singleProduct: null,
         isLoading: false,
         isError: false,
         message: null,
     },
-    reducers:{},
+    reducers:{
+    },
     extraReducers:  (builder)=>{
 
         
@@ -63,6 +65,6 @@ export const productSlice = createSlice({
 })
 
 
-export const {} = productSlice.actions;
+export const {addFavoriteProduct, clearMessage} = productSlice.actions;
 
 export default productSlice.reducer;

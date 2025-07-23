@@ -68,15 +68,15 @@ const ProductDetailPage = () => {
           <div className="flex items-center space-x-3 ">
             <div className="flex items-center space-x-1">
               {singleProduct?.averageRating &&
-                Array(singleProduct.averageRating)
+                Array(Math.round(singleProduct?.averageRating))
                   .fill()
                   .map((_, i) => <IoStar key={i} className="text-blue-600" />)}
             </div>
 
-            <p className="text-slate-600 text-sm  border-b-2 border-slate-600">
-              {singleProduct?.numReviews && singleProduct.numReviews}{" "}
-              değerlendirme
-            </p>
+            <div className="flex items-center text-slate-600 text-sm  border-b-2 border-slate-600">
+              {singleProduct?.numReviews && singleProduct.numReviews}
+              <p className=" pl-1">değerlendirme</p>
+            </div>
           </div>
 
           <label htmlFor="" className="text-slate-800 font-semibold">Beden Seçiniz</label>
@@ -90,8 +90,8 @@ const ProductDetailPage = () => {
               Beden Seç
             </option>
             {
-              singleProduct?.sizes?.map((size)=>(
-                <option value={size}>{size}</option>
+              singleProduct?.sizes?.map((size,i)=>(
+                <option key={i} value={size}>{size}</option>
               ))
             }
           </select>

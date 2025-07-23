@@ -48,20 +48,21 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-5 ">
-          <DropdownMenu  >
+          <DropdownMenu className="outline-none" >
             <DropdownMenuTrigger>
-              <IoPersonOutline size={25} />
+              <IoPersonOutline size={25}  />
             </DropdownMenuTrigger>
-            <DropdownMenuContent >
+            <DropdownMenuContent  >
               <DropdownMenuLabel className="text-lg">Hesabım</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem  className="text-base cursor-pointer">Profil</DropdownMenuItem>
               <DropdownMenuItem onClick = {()=>navigate("/siparislerim")} className="text-base cursor-pointer">Siparişlerim</DropdownMenuItem>
-              <DropdownMenuItem className="text-base cursor-pointer">Favorilerim</DropdownMenuItem>
+              <DropdownMenuItem  className="text-base cursor-pointer">Favorilerim</DropdownMenuItem>
               <DropdownMenuItem onClick={logoutHandler} className="text-red-500 focus:text-red-800 transition-all cursor-pointer text-base">Çıkış Yap</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <IoHeartOutline
+            onClick = {()=>navigate("/favoriler")}
             size={25}
             className="cursor-pointer hover:scale-105 transition-all"
           />

@@ -67,18 +67,18 @@ const OrderPage = () => {
                         <div className="flex">
                           <img
                             className="w-[90px] h-[90px] bg-gray-200 rounded-full object-contain"
-                            src={item.product.image}
+                            src={item?.product?.image}
                             alt=""
                           />
                         </div>
                         <div className="flex flex-col space-y-1 pl-3">
                           <p className="text-slate-600 font-bold">
-                            {item.product.title}
+                            {item?.product?.title}
                           </p>
                           <p className="text-slate-500 ">
-                            {item.product.description}
+                            {item?.product?.description}
                           </p>
-                          <p className="text-slate-500 ">{item.size}</p>
+                          <p className="text-slate-500 ">{item?.size}</p>
                         </div>
                       </div>
                       <div className="flex items-center ">
