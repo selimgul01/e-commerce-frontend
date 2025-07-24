@@ -1,19 +1,38 @@
 import ProductCard from "@/components/Product/ProductCard";
-import { getFavorites } from "@/redux/favorite/favoriteSlice";
+import { clearFeedback, getFavorites } from "@/redux/favorite/favoriteSlice";
 import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
 const FavoritePage = () => {
 
-  const {favorites} = useSelector(state => state.favorite)
+  const {favorites, status, feedbackMessage} = useSelector(state => state.favorite)
   const dispatch = useDispatch()
-  
+
+
+
   useEffect(()=>{
-    dispatch(getFavorites())
-  },[dispatch])
+      dispatch(getFavorites())
+    },[dispatch])
+
+
+  useEffect(()=>{
+    if (status === "success" && feedbackMessage) {
+      toast.success(feedbackMessage)
+      dispatch(clearFeedback())
+    } else if (status === "error" && feedbackMessage) {
+      toast.error(feedbackMessage)
+      dispatch(clearFeedback())
+    }
+  },[feedbackMessage, status, dispatch])
   
-  console.log("favorites",favorites)
+ 
+
+  console.log("favorites",
+    favorites
+  )
+  
 
   return (
     <div className="container m-auto mt-10">

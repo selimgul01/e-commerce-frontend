@@ -13,9 +13,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const location = useLocation()
 
-  console.log("location.pathname",location.pathname)
 
-  console.log("product",product)
 
   const addFavoritesHandler = () => {
     dispatch(addToFavorite({productId:product._id}))
@@ -31,7 +29,7 @@ const ProductCard = ({ product }) => {
       
       className=" w-[350px] h-[450px] flex flex-col space-y-5 cursor-pointer hover:shadow-xl transition-all delay-100 p-3 relative"
     >
-      <div onClick={() => navigate(`/detay/${product?._id}`)} className="">
+      <div onClick={() => navigate(`/detay/${product?._id}`)} className="w-full h-full space-y-2">
         <img
           className="w-full h-1/2 object-contain"
           src={product?.image}
@@ -45,7 +43,7 @@ const ProductCard = ({ product }) => {
             {product?.description}
           </p>
           <div className="flex items-center space-x-1">
-            {Array(Math.round(product?.averageRating && product?.averageRating))
+            { product?.averageRating > 1 && Array(Math.round(product?.averageRating && product?.averageRating))
               .fill()
               .map((_, i) => (
                 <IoStar key={i} className="text-blue-600" />

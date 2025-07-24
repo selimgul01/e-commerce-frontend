@@ -15,6 +15,7 @@ export const addToCart = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -38,17 +39,16 @@ export const getCart = createAsyncThunk("cart/getCart", async (_, thunkAPI) => {
   }
 });
 
-export const removeFromCart = createAsyncThunk("cart/removeFromCart",async({productId, size},thunkAPI)=>{
+export const removeFromCart = createAsyncThunk("cart/removeFromCart",async(productId,thunkAPI)=>{
   try {
     const token = localStorage.getItem("token");
     const res = await axios.delete(`${API_BASE}/remove`,{
       headers:{
         Authorization: `Bearer ${token}`
       },
-      data:{ productId, size }
+      data: productId 
     })
-    console.log("res.data.",res.data)
-    return res.data.items
+    return res.data
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
@@ -74,12 +74,13 @@ export const cartSlice = createSlice({
   initialState: { 
     items: [],
     loading: false,
-    error: null,
-    IsSuccessful: false
+    status: "idle",
+    feedbackMessage: false
   },
   reducers: {
     clearStatus: (state)=>{
-      state.IsSuccessful = false
+      state.feedbackMessage = false
+      state.status ="idle"
     },
     increaseQuantity: (state, action) => {
       const { productId, size } = action.payload;
@@ -114,7 +115,7 @@ export const cartSlice = createSlice({
       // getCart
       .addCase(getCart.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.status = "pending";
       })
       .addCase(getCart.fulfilled, (state, action) => {
         state.loading = false;
@@ -122,33 +123,47 @@ export const cartSlice = createSlice({
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.status = "error"
+        state.feedbackMessage = action.payload;
       })
 
       // addToCart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
-        state.error = null;
-        state.IsSuccessful = false
+        state.feedbackMessage = null;
+        state.status = "pending"
       })
       .addCase(addToCart.fulfilled, (state, action) => {
+        console.log("action.payload:",action.payload)
         state.loading = false;
-        state.IsSuccessful = true
-        state.items = action.payload.items; 
+        state.status = "success"
+        state.feedbackMessage = action.payload.message
+        state.items = action.payload.cart.items; 
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-        state.IsSuccessful = false
+        state.feedbackMessage = action.payload;
+        state.status = "error"
       })
 
       .addCase(clearCart.fulfilled, (state) => {
         state.items = []; 
       })
+      .addCase(removeFromCart.pending,(state,action) => {
+        state.feedbackMessage = null
+        state.status = "pending"
+        state.loading = true 
+      })
       .addCase(removeFromCart.fulfilled,(state,action) => {
-        
-        state.items = action.payload
-        state.IsSuccessful = true
+        const {productId} = action.meta.arg
+        console.log("action.payload.message:",action.payload.message)
+        state.feedbackMessage = action.payload.message
+        state.status = "success"
+        state.items = state.items.filter((item) => item._id !== productId )
+      }).addCase(removeFromCart.rejected,(state,action) => {
+        state.feedbackMessage = action.payload
+        state.status = "error"
+        state.loading = false 
       })
   },
 });

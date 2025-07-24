@@ -10,12 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const ProductDetailPage = () => {
+
+
   const [size, setSize] = useState("S");
+  
+  const dispatch = useDispatch();
 
   const { id } = useParams();
   const { singleProduct } = useSelector((state) => state.product);
-  const { IsSuccessful } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { status, feedbackMessage } = useSelector((state) => state.cart);
 
   console.log("singleProduct", singleProduct);
 
@@ -24,11 +27,14 @@ const ProductDetailPage = () => {
   }, [dispatch, id]);
 
   useEffect(()=>{
-    if (IsSuccessful) {
-      toast.success("Ürün Sepete Eklendi");
+    if (status === "success" && feedbackMessage) {
+      toast.success(feedbackMessage);
+      dispatch(clearStatus())
+    } else if (status === "error" && feedbackMessage){
+      toast.error(feedbackMessage);
       dispatch(clearStatus())
     }
-  },[IsSuccessful])
+  },[status ,dispatch, feedbackMessage])
 
   const submitHandler = () => {
    
@@ -43,7 +49,7 @@ const ProductDetailPage = () => {
           src={singleProduct?.image}
           alt=""
         />
-        <div className=" flex flex-col space-y-5 ">
+        <div className=" flex flex-col space-y-5  max-w-[400px]">
           <p className="text-slate-800 font-bold text-3xl">
             {singleProduct?.title}
           </p>
@@ -63,14 +69,16 @@ const ProductDetailPage = () => {
                 {" "}
                 {singleProduct?.discountprice} TL
               </p>
-            )}
+            )} 
           </div>
           <div className="flex items-center space-x-3 ">
             <div className="flex items-center space-x-1">
-              {singleProduct?.averageRating &&
+              {singleProduct?.averageRating ?
                 Array(Math.round(singleProduct?.averageRating))
                   .fill()
-                  .map((_, i) => <IoStar key={i} className="text-blue-600" />)}
+                  .map((_, i) => <IoStar key={i} className="text-blue-600" />)
+                  : <div></div>
+              }
             </div>
 
             <div className="flex items-center text-slate-600 text-sm  border-b-2 border-slate-600">

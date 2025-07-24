@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiTruck } from "react-icons/fi";
 import Counter from "../Counter";
 import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearStatus,
   decreaseQuantity,
-  increaseQuantity,
+  increaseQuantity, 
   removeFromCart,
 } from "@/redux/cart/cartSlice";
 import toast from "react-hot-toast";
 
 const CartItem = ({ item }) => {
-
-  const {isSuccessful} = useSelector(state => state.cart)
+  
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
@@ -27,9 +27,10 @@ const CartItem = ({ item }) => {
   };
 
   const removeFromCartHandler = () => {
-    dispatch(removeFromCart({productId: item.product._id, size: item.size}));
-    isSuccessful && toast.success("Ürün Sepetten Çıkarıldı")
+    dispatch(removeFromCart({productId: item._id}));
   };
+
+
 
   return (
     <div className="border-b border-gray-300 flex items-center justify-between p-5 space-x-10 shadow-xl select-none">

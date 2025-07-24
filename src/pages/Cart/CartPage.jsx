@@ -1,27 +1,37 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "@/redux/cart/cartSlice";
+import { clearStatus, getCart } from "@/redux/cart/cartSlice";
 import CartItem from "@/components/Cart/CartItem";
 import toast from "react-hot-toast";
 import OrderModal from "@/components/OrderModal/OrderModal";
 
-
 const CartPage = () => {
-  const { items } = useSelector((state) => state.cart);
+  const { status, feedbackMessage, items } = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
+  useEffect(()=>{
+      dispatch(getCart())
+    },[dispatch])
 
-  const totalAmount = items.reduce((acc, item) => {
-    return acc + item.quantity * (item?.product?.discountprice ? item?.product?.discountprice : item?.product?.price );
+  useEffect(() => {
+    if (status === "success" && feedbackMessage) {
+      toast.success("Ürün Sepetten Çıkarıldı");
+      dispatch(clearStatus());
+    }
+  }, [status, feedbackMessage, dispatch]);
+
+  const totalAmount = items?.reduce((acc, item) => {
+    return (
+      acc +
+      item.quantity *
+        (item?.product?.discountprice
+          ? item?.product?.discountprice
+          : item?.product?.price)
+    );
   }, 0);
 
-  console.log("items",items)
-
- 
-  return ( 
+  return (
     <>
       {items.length > 0 ? (
         <div className="container m-auto mt-10 flex space-x-14 justify-center ">
@@ -44,7 +54,7 @@ const CartPage = () => {
               </p>
             </div>
 
-            <OrderModal/>
+            <OrderModal />
           </div>
         </div>
       ) : (
@@ -55,6 +65,5 @@ const CartPage = () => {
     </>
   );
 };
-
 
 export default CartPage;

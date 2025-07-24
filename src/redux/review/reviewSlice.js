@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/reviews";
+const BASE_URL = "http://localhost:5000/api/reviews"; 
 
 
 export const createReview = createAsyncThunk("review/createReview",async({productId, rating, comment},thunkAPI)=>{
@@ -36,8 +36,8 @@ export const fetchReviews = createAsyncThunk(
 const initialState = {
   reviews: [],
   loading: false,
-  error: null,
-  message: null
+  status : "idle",
+  feedbackMessage: null
 };
 
 export const reviewSlice = createSlice({
@@ -45,15 +45,15 @@ export const reviewSlice = createSlice({
   initialState,
   reducers: {
     resetReviewStatus: (state)=>{
-      state.message = null
-      state.error = null
+      state.feedbackMessage = null
+     
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviews.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.feedbackMessage = null;
       })
       .addCase(fetchReviews.fulfilled, (state, action) => {
         state.loading = false;
@@ -61,22 +61,24 @@ export const reviewSlice = createSlice({
       })
       .addCase(fetchReviews.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.feedbackMessage = action.payload;
       });
 
       builder
       .addCase(createReview.pending, (state) => {
+        state.status = "pending"
         state.loading = true
-        state.message = null;
+        state.feedbackMessage = null;
       })
       .addCase(createReview.fulfilled, (state, action) => {
+        state.status = "success"
         state.loading = false;
-        state.message = action.payload.message
-        state.error = null;
+        state.feedbackMessage = action.payload.message
       })
       .addCase(createReview.rejected, (state, action) => {
+        state.status = "error"
         state.loading = false;
-        state.message = action.payload
+        state.feedbackMessage = action.payload
       });
   },
 });

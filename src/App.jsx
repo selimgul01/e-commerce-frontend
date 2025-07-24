@@ -10,10 +10,22 @@ import AuthPage from "./pages/Auth/AuthPage";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "./AppLayout";
 import OrderPage from "./pages/Order/OrderPage";
+import { useEffect } from "react";
+import { getFavorites } from "./redux/favorite/favoriteSlice";
+import { useDispatch } from "react-redux";
+import { getCart } from "./redux/cart/cartSlice";
 
 
  
 function App() {
+  const dispatch = useDispatch()
+
+
+   useEffect(()=>{
+    dispatch(getFavorites())
+    dispatch(getCart())
+
+  },[dispatch])
 
   return (
     <>

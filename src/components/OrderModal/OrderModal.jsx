@@ -32,13 +32,9 @@ const OrderModal = () => {
     }
   },[success,error,dispatch])
 
-
   useEffect(()=>{
     dispatch(fetchOrder())
   },[dispatch])
-
-  console.log("success",success)
-  console.log("shippingData",shippingData)
 
 
   const shippingDataChangeHandler = (e) => {

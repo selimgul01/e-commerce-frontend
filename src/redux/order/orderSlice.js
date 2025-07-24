@@ -33,8 +33,7 @@ export const fetchOrder = createAsyncThunk(
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      console.log(" response.data", response.data);
+      })
       return response.data;
     } catch (error) {
       return  console.log(error.response?.data?.message || "Sipariş Getirilemedi")
