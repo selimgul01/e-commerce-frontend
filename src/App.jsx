@@ -10,30 +10,38 @@ import AuthPage from "./pages/Auth/AuthPage";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "./AppLayout";
 import OrderPage from "./pages/Order/OrderPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getFavorites } from "./redux/favorite/favoriteSlice";
 import { useDispatch } from "react-redux";
 import { getCart } from "./redux/cart/cartSlice";
 
-
- 
 function App() {
-  const dispatch = useDispatch()
+  const [search, setSearch] = useState("");
 
+  const dispatch = useDispatch();
 
-   useEffect(()=>{
-    dispatch(getFavorites())
-    dispatch(getCart())
+  const token = localStorage.getItem("token");
 
-  },[dispatch])
+  
+    useEffect(() => {
+
+      if (token) {
+        dispatch(getFavorites());
+        dispatch(getCart());
+      }
+    }, [dispatch]);
+  
 
   return (
     <>
       <BrowserRouter>
-        <AppLayout>
+        <AppLayout search={search} setSearch={setSearch}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/erkek" element={<MaleCategoryPage />} />
+            <Route
+              path="/erkek"
+              element={<MaleCategoryPage search={search} />}
+            />
             <Route path="/kadın" element={<FemaleCategoryPage />} />
             <Route path="/detay/:id" element={<ProductDetailPage />} />
             <Route path="/favoriler" element={<FavoritePage />} />

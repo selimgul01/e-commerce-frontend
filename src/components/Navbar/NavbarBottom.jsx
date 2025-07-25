@@ -29,7 +29,7 @@ const NavbarBottom = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="container m-auto flex items-center justify-center space-x-5 mt-5">
+    <div className="container m-auto flex items-center justify-center space-x-5 mt-5 overflow-x-auto">
       {categories?.map((category, i) => (
         <span
           onClick={() => navigate(`/${category}`)}

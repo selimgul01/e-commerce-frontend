@@ -10,15 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const ProductDetailPage = () => {
-
-
   const [size, setSize] = useState("S");
-  
+
   const dispatch = useDispatch();
 
   const { id } = useParams();
   const { singleProduct } = useSelector((state) => state.product);
   const { status, feedbackMessage } = useSelector((state) => state.cart);
+
+  const token = localStorage.getItem("token");
 
   console.log("singleProduct", singleProduct);
 
@@ -26,19 +26,23 @@ const ProductDetailPage = () => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
-  useEffect(()=>{
-    if (status === "success" && feedbackMessage) {
-      toast.success(feedbackMessage);
-      dispatch(clearStatus())
-    } else if (status === "error" && feedbackMessage){
-      toast.error(feedbackMessage);
-      dispatch(clearStatus())
-    }
-  },[status ,dispatch, feedbackMessage])
+  if (token) {
+    useEffect(() => {
+      if (status === "success" && feedbackMessage) {
+        toast.success(feedbackMessage);
+        dispatch(clearStatus());
+      } else if (status === "error" && feedbackMessage) {
+        toast.error(feedbackMessage);
+        dispatch(clearStatus());
+      }
+    }, [status, dispatch, feedbackMessage]);
+  }
 
   const submitHandler = () => {
-   
-    dispatch(addToCart({ productId: id, quantity: 1, size }));
+    if (token) {
+      dispatch(addToCart({ productId: id, quantity: 1, size }));
+    }
+    toast.error("Önce Giriş Yapmalısın")
   };
 
   return (
@@ -69,39 +73,45 @@ const ProductDetailPage = () => {
                 {" "}
                 {singleProduct?.discountprice} TL
               </p>
-            )} 
+            )}
           </div>
           <div className="flex items-center space-x-3 ">
             <div className="flex items-center space-x-1">
-              {singleProduct?.averageRating ?
+              {singleProduct?.averageRating ? (
                 Array(Math.round(singleProduct?.averageRating))
                   .fill()
                   .map((_, i) => <IoStar key={i} className="text-blue-600" />)
-                  : <div></div>
-              }
+              ) : (
+                <div></div>
+              )}
             </div>
 
             <div className="flex items-center text-slate-600 text-sm  border-b-2 border-slate-600">
-              {singleProduct?.numReviews && singleProduct.numReviews}
-              <p className=" pl-1">değerlendirme</p>
+              {singleProduct?.numReviews === 0 ? <p className=" pl-1">Bu ürün henüz değerlendirilmedi</p> : 
+              <div className=" flex items-center">
+                <p>{singleProduct.numReviews}</p>
+                <p className=" pl-1">değerlendirme</p>
+              </div> }
             </div>
           </div>
 
-          <label htmlFor="" className="text-slate-800 font-semibold">Beden Seçiniz</label>
+          <label htmlFor="" className="text-slate-800 font-semibold">
+            Beden Seçiniz
+          </label>
           <select
             onChange={(e) => setSize(e.target.value)}
             name="size"
             id="size"
             className="max-w-[150px] text-center outline-none border border-gray-300 p-1 rounded-lg"
           >
-            <option value="" disabled={true} >
+            <option value="" disabled={true}>
               Beden Seç
             </option>
-            {
-              singleProduct?.sizes?.map((size,i)=>(
-                <option key={i} value={size}>{size}</option>
-              ))
-            }
+            {singleProduct?.sizes?.map((size, i) => (
+              <option key={i} value={size}>
+                {size}
+              </option>
+            ))}
           </select>
           <Button onClick={submitHandler} className="w-full">
             Sepete Ekle

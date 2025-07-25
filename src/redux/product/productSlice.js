@@ -5,12 +5,22 @@ const API_BASE = "http://localhost:5000/api/products";
 
 export const getAllProducts = createAsyncThunk(
   "products/getAllProduct",
-  async (_, thunkAPI) => {
+  async (filters = {} , thunkAPI) => { 
+
+    const {search , category } = filters
+
+    console.log("filters",category)
     try {
-      const response = await axios(API_BASE);
+      let query = "";
+
+      if (search) query += `search=${encodeURIComponent(search)}`;
+      if (category) query += `${query ? "&" : ""}category=${encodeURIComponent(category)}`;
+
+      const response = await axios(`${API_BASE}?${query}`);
+      console.log("response.data",response.data)
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message)
     }
   }
 );
