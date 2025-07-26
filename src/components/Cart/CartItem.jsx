@@ -10,10 +10,18 @@ import {
   removeFromCart,
 } from "@/redux/cart/cartSlice";
 import toast from "react-hot-toast";
+import { currencyFormatter } from "@/utils/CurrencyFormatter";
 
 const CartItem = ({ item }) => {
   
   const dispatch = useDispatch();
+
+
+    const formatPrice = (price) => {
+      if( price === null || price === undefined  ) return ""
+      return currencyFormatter.format(price)
+    }
+  
 
   const incrementHandler = () => {
     dispatch(
@@ -33,15 +41,15 @@ const CartItem = ({ item }) => {
 
 
   return (
-    <div className="border-b border-gray-300 flex items-center justify-between p-5 space-x-10 shadow-xl select-none">
-      <div className=" flex items-center space-x-5">
+    <div className="border-b border-gray-300 flex lg:flex-row flex-col lg:items-center justify-between p-5 lg:space-x-10 space-y-5 shadow-xl select-none">
+      <div className=" flex lg:flex-row flex-col lg:items-center lg:space-x-5 space-y-5">
         <img
           className="object-contain"
           src={item?.product?.image}
           alt=""
           width={100}
         />
-        <div className=" flex flex-col space-y-2 w-[542px]">
+        <div className=" flex flex-col space-y-2 max-w-[542px]">
           <h1 className=" text-slate-800 font-bold">{item?.product?.title}</h1>
           <div className="text-sm font-semibold text-slate-700">
             {item?.product?.description}
@@ -69,6 +77,7 @@ const CartItem = ({ item }) => {
 
       <div className="flex items-center space-x-8 ">
         <p className=" font-semibold text-blue-800 cursor-pointer w-[60px] text-center ">
+          
           {(item?.product?.discountprice ? item?.product?.discountprice : item?.product?.price) * item?.quantity} ₺
         </p>
         <div onClick={removeFromCartHandler} className=" w-[50px] h-[50px] content-center ">

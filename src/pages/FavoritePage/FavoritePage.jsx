@@ -25,12 +25,11 @@ const FavoritePage = () => {
     }
   }, [feedbackMessage, status, dispatch]);
 
-  console.log("favorites", favorites);
 
   return (
     <div className="container m-auto mt-10">
       {favorites?.items?.length > 0 ? (
-        <div className="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 space-x-3">
+        <div className=" grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 2xl:gap-5 xl:gap-4 lg:gap-3 md:gap-2 space-x-10 ">
           {favorites?.items?.map((product) => (
             <ProductCard product={product.product} />
           ))}

@@ -134,7 +134,6 @@ export const cartSlice = createSlice({
         state.status = "pending"
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        console.log("action.payload:",action.payload)
         state.loading = false;
         state.status = "success"
         state.feedbackMessage = action.payload.message
@@ -156,7 +155,6 @@ export const cartSlice = createSlice({
       })
       .addCase(removeFromCart.fulfilled,(state,action) => {
         const {productId} = action.meta.arg
-        console.log("action.payload.message:",action.payload.message)
         state.feedbackMessage = action.payload.message
         state.status = "success"
         state.items = state.items.filter((item) => item._id !== productId )

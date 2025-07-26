@@ -19,7 +19,6 @@ const AuthPage = () => {
   const dispatch = useDispatch();
   const { isLoading, user,message } = useSelector((state) => state.auth);
 
-  console.log("formdata", formData);
 
   useEffect(() => {
     if (user) {

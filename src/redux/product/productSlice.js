@@ -9,7 +9,6 @@ export const getAllProducts = createAsyncThunk(
 
     const {search , category } = filters
 
-    console.log("filters",category)
     try {
       let query = "";
 
@@ -17,7 +16,6 @@ export const getAllProducts = createAsyncThunk(
       if (category) query += `${query ? "&" : ""}category=${encodeURIComponent(category)}`;
 
       const response = await axios(`${API_BASE}?${query}`);
-      console.log("response.data",response.data)
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message)

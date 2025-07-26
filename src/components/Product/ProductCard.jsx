@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
   return (
     <div
       
-      className=" w-[350px] h-[450px] flex flex-col space-y-5 cursor-pointer hover:shadow-xl transition-all delay-100 p-3 relative"
+      className=" 2xl:w-[350px] 2xl:h-[450px] xl:w-[300px] xl:h-[400px] md:w-[300px] md:h-[370px] w-[400px] h-[470px] flex flex-col space-y-5 cursor-pointer hover:shadow-xl transition-all delay-100 p-3 relative"
     >
       <div onClick={() => navigate(`/detay/${product?._id}`)} className="w-full h-full space-y-2">
         <img

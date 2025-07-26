@@ -9,7 +9,6 @@ export const register = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post(`${API_BASE}register`, data);
-      console.log("response Data: ", response.data);
       localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
@@ -23,7 +22,6 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk("auth/login", async(data, thunkAPI)=>{
     try {
         const response = await axios.post(`${API_BASE}login`, data);
-        console.log("response Data: ", response.data);
         localStorage.setItem("token", response.data.token);
         return response.data;
     } catch (error) {
@@ -57,7 +55,6 @@ export const authSlice = createSlice({
     builder.addCase(register.pending, (state)=>{
         state.isLoading = true
     }).addCase(register.fulfilled, (state,action)=> {
-      console.log("action.payload:", action.payload)
         state.message = action.payload.message
         state.user =  action.payload
         state.isLoading = false

@@ -13,7 +13,6 @@ export const addToFavorite = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response.data:", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -93,7 +92,6 @@ export const favoriteSlice = createSlice({
         state.feedbackMessage = action.payload.message
       })
       .addCase(addToFavorite.rejected, (state, action) => {
-        console.log("action.payload",action.payload)
         state.status = "error"
         state.loading = false;
         state.feedbackMessage = action.payload;

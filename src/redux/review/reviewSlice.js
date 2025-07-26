@@ -14,7 +14,6 @@ export const createReview = createAsyncThunk("review/createReview",async({produc
         Authorization: `Bearer ${token}`
       }
     })
-    console.log("response.data review:",response.data)
     return response.data
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.message);

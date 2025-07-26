@@ -1,10 +1,9 @@
-import React from 'react'
-
+import React from "react";
 
 const images = [
   {
     text: "Tüm Ürünler",
-    id: 1
+    id: 1,
   },
   {
     image:
@@ -41,18 +40,12 @@ const images = [
     text: "Sneaker",
     id: 3,
   },
-  
+
   {
     image:
       "/maleCategoryImage/John-Richmond-Normal-Siyah-Erkek-Ceket__1725279416.webp",
     text: "Ceket",
     id: 6,
-  },
-  
-  {
-    image: "/maleCategoryImage/Siyah-Deri-Evrak-Cantasi_1725279420.webp",
-    text: "Çanta",
-    id: 8,
   },
   {
     image:
@@ -60,38 +53,42 @@ const images = [
     text: "Eşofman",
     id: 9,
   },
-  
 ];
 
-const MaleCategory = ({setCategorySearch}) => {
-
-
+const MaleCategory = ({ setCategorySearch }) => {
   const categorySearchHandler = (image) => {
-    setCategorySearch(image.text)
-  }
+    setCategorySearch(image.text);
+  };
 
   return (
-    <div className="pb-20 border-b">
-        <h1 className="text-4xl font-semibold text-slate-900">Erkek</h1>
-        <div className="grid xl:grid-cols-10 lg:grid-cols-7 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 mt-3 space-x-8  ">
-          {images.map((image) => (
-          <div onClick={()=>categorySearchHandler(image)} key={image.id} className="flex flex-col items-center space-y-2 cursor-pointer">
-            <div className="bg-gray-200 w-[130px] h-[130px] rounded-full  ">
-              {
-                image?.image ? <img src={image?.image} alt="" /> : <div className="h-full w-full flex items-center justify-center text-xl text-slate-800"> Tüm Ürünler</div>
-              }
-              
+    <div className="pb-10 border-b xl:overflow-hidden overflow-x-scroll ">
+      <h1 className="text-4xl font-semibold text-slate-900 ">Erkek</h1>
+      <div className="flex items-center justify-between mt-3 space-x-8 min-w-[1270px] ">
+        {images.map((image) => (
+          <div
+            onClick={() => categorySearchHandler(image)}
+            key={image.id}
+            className="flex flex-col items-center space-y-2 cursor-pointer"
+          >
+            <div className="bg-gray-200 rounded-full  2xl:w-[130px] 2xl:h-[130px] xl:w-[100px] xl:h-[100px]  ">
+              {image?.image ? (
+                <img src={image?.image} alt="" />
+              ) : (
+                <div className=" flex items-center justify-center text-xl text-center text-slate-800 2xl:w-[130px] 2xl:h-[130px] w-[110px] h-[110px] ">
+                  Tüm Ürünler
+                </div>
+              )}
             </div>
-            {
-              image.image &&  <p className='flex items-center justify-center w-full h-full text-center'>{image?.text}</p>
-            }
-            
+            {image.image && (
+              <p className="flex items-center justify-center w-full h-full text-center">
+                {image?.text}
+              </p>
+            )}
           </div>
         ))}
-        </div> 
-        
       </div>
-  )
-}
+    </div>
+  );
+};
 
-export default MaleCategory
+export default MaleCategory;

@@ -39,7 +39,7 @@ const MaleCategoryPage = ({search}) => {
   return (
     <div className="container m-auto w-full mt-10">
       <MaleCategory categorySearch={categorySearch} setCategorySearch={setCategorySearch} />
-      <div className=" my-20 grid grid-cols-4 gap-5">
+      <div className=" my-20 grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 2xl:gap-5 xl:gap-4 lg:gap-3 md:gap-2">
         {products?.map((product) => (
           <ProductCard product={product} key={product._id} />
         ))}

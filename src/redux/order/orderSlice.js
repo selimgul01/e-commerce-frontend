@@ -14,7 +14,6 @@ export const createOrder = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response.data:",response.data)
       return response.data.order;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -64,7 +63,6 @@ export const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false
-        console.log("sipariş başarılı")
         state.success = true
         state.order = action.payload
       })

@@ -19,7 +19,6 @@ const OrderPage = () => {
     dispatch(fetchOrder());
   }, [dispatch]);
 
-  console.log("orders:", orders);
 
   return (
     <div className="container m-auto my-10  ">
@@ -27,15 +26,15 @@ const OrderPage = () => {
         <div key={order._id} className="border p-5 rounded-xl bg-[#EEEEEE] mt-5">
           <Accordion className="w-full" type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger  className="grid grid-cols-5">
-                <div className="flex flex-col items-center justify-center">
+              <AccordionTrigger  className="grid grid-cols-5 space-x-5">
+                <div className="flex flex-col items-center justify-center ">
                   <p className="text-sm text-slate-500">Sipariş Tarihi</p>
                   <p className="text-sm text-slate-700">
                     {order.createdAt.substring(0, 10)}
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center ">
                   <p className="text-sm text-slate-500">Sipariş Özeti</p>
                   <p className="text-sm text-slate-700">
                     1 Teslimat , {order.items.length} Ürün

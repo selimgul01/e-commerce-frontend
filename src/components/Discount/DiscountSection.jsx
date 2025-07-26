@@ -19,7 +19,7 @@ const DiscountSection = () => {
           %40'a varan indirimi kaçırma!
         </p>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 space-x-4">
+      <div className="flex items-center justify-between space-x-4">
         {images.map((image, i) => (
           <Card key={i} image={image} />
         ))}

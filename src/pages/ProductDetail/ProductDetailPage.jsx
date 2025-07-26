@@ -1,4 +1,3 @@
-import Counter from "@/components/Counter";
 import Reviews from "@/components/Reviews/Reviews";
 import { Button } from "@/components/ui/button";
 import { addToCart, clearStatus } from "@/redux/cart/cartSlice";
@@ -20,7 +19,6 @@ const ProductDetailPage = () => {
 
   const token = localStorage.getItem("token");
 
-  console.log("singleProduct", singleProduct);
 
   useEffect(() => {
     dispatch(getProductById(id));
@@ -41,23 +39,24 @@ const ProductDetailPage = () => {
   const submitHandler = () => {
     if (token) {
       dispatch(addToCart({ productId: id, quantity: 1, size }));
+    }else{
+      toast.error("Önce Giriş Yapmalısın")
     }
-    toast.error("Önce Giriş Yapmalısın")
   };
 
   return (
     <div className="container m-auto">
-      <div className=" flex justify-center space-x-16 mt-10 ">
+      <div className="flex lg:flex-row lg:justify-center flex-col  mt-10 lg:items-start  items-center lg:space-x-10 space-y-5 ">
         <img
-          className=" w-[500px] h-[700px] border  col-end-2 "
+          className=" lg:w-[500px] lg:h-[700px] md:w-[550px] md:h-[700px]  border  col-end-2  "
           src={singleProduct?.image}
           alt=""
         />
-        <div className=" flex flex-col space-y-5  max-w-[400px]">
-          <p className="text-slate-800 font-bold text-3xl">
+        <div className=" flex flex-col space-y-5  lg:max-w-[550px]  w-full">
+          <p className="text-slate-800 font-bold xl:text-3xl lg:text-2xl md:text-xl">
             {singleProduct?.title}
           </p>
-          <p className="text-xl font-semibold">{singleProduct?.description}</p>
+          <p className="lg:text-xl  font-semibold">{singleProduct?.description}</p>
           <div className="flex items-end space-x-4">
             <p
               className={`${
@@ -89,7 +88,7 @@ const ProductDetailPage = () => {
             <div className="flex items-center text-slate-600 text-sm  border-b-2 border-slate-600">
               {singleProduct?.numReviews === 0 ? <p className=" pl-1">Bu ürün henüz değerlendirilmedi</p> : 
               <div className=" flex items-center">
-                <p>{singleProduct.numReviews}</p>
+                <p>{singleProduct?.numReviews}</p>
                 <p className=" pl-1">değerlendirme</p>
               </div> }
             </div>
